@@ -6,7 +6,13 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBConnection
 {
@@ -28,30 +34,28 @@ public class DBConnection
                 .filename(".env")
                 .load();
 
-        Configuration hibernate_cfg = new Configuration();
+        Map<String, Object> settings = new HashMap<>();
 
-        //Definir las propiedades de configuración de Hibernate
-        hibernate_cfg.setProperty("hibernate.connection.url", AssemblyURL.assembleURL());
-        hibernate_cfg.setProperty("hibernate.connection.driver_class", dotenv.get("DB_DRIVER_MYSQL"));
-        hibernate_cfg.setProperty("hibernate.connection.username", dotenv.get("DB_USER_MYSQL"));
-        hibernate_cfg.setProperty("hibernate.connection.password", dotenv.get("DB_PASSWORD_MYSQL"));
-        hibernate_cfg.setProperty("hibernate.dialect",dotenv.get("DB_DIALECT"));
-        hibernate_cfg.setProperty("hibernate.hbn2ddl.auto", dotenv.get("HBN2DDL_AUTO"));
+        settings.put("hibernate.connection.url", URLAssembly.assemble());
+        settings.put("hibernate.connection.driver_class", dotenv.get("DB_DRIVER_MYSQL"));
+        settings.put("hibernate.connection.username", dotenv.get("DB_USER_MYSQL"));
+        settings.put("hibernate.connection.password", dotenv.get("DB_PASSWORD_MYSQL"));
+        settings.put("hibernate.dialect",dotenv.get("DB_DIALECT"));
+        settings.put("hibernate.hbn2ddl.auto", dotenv.get("HBN2DDL_AUTO"));
+        settings.put("hibernate.show_sql", "true");
+        settings.put("hibernate.format_sql", "true");
 
-        //Mostramos sql para depurar y a la hora de compilar para recibir pistas y autocompletar al escribir consultas
-        hibernate_cfg.setProperty("hibernate.show_sql", "true");
-        hibernate_cfg.setProperty("hibernate.format_sql", "true");
+        StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().applySettings(settings).build();
 
-        //Mapear entidades
-        hibernate_cfg.addAnnotatedClass(User.class);
-        hibernate_cfg.addAnnotatedClass(Videogame.class);
-        hibernate_cfg.addAnnotatedClass(Company.class);
-        hibernate_cfg.addAnnotatedClass(Backlog.class);
-        hibernate_cfg.addAnnotatedClass(Platform.class);
-        hibernate_cfg.addAnnotatedClass(GamesPlatforms.class);
-        hibernate_cfg.addAnnotatedClass(VideojuegoPlataformaId.class);
-
-        session_factory = hibernate_cfg.buildSessionFactory();
+        session_factory = new MetadataSources(ssr)
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Videogame.class)
+                .addAnnotatedClass(Company.class)
+                .addAnnotatedClass(Backlog.class)
+                .addAnnotatedClass(Platform.class)
+                .addAnnotatedClass(GamesPlatforms.class)
+                .addAnnotatedClass(VideojuegoPlataformaId.class)
+                .buildMetadata().buildSessionFactory();
     }
 
     protected Session getSession()
