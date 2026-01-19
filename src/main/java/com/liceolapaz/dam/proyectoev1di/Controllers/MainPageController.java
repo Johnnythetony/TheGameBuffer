@@ -2,7 +2,6 @@ package com.liceolapaz.dam.proyectoev1di.Controllers;
 
 import com.liceolapaz.dam.proyectoev1di.DTO.GameFilterDTO;
 import com.liceolapaz.dam.proyectoev1di.DTO.VideogameDTO;
-import com.liceolapaz.dam.proyectoev1di.Entities.GamesPlatforms;
 import com.liceolapaz.dam.proyectoev1di.ResourcePaths.Images;
 import com.liceolapaz.dam.proyectoev1di.ResourcePaths.Stylesheets;
 import com.liceolapaz.dam.proyectoev1di.Services.GamesPlatformsService;
@@ -15,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -25,7 +23,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
-import org.hibernate.Session;
 
 import java.net.URI;
 import java.net.URL;

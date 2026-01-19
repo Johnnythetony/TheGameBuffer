@@ -2,7 +2,7 @@ package com.liceolapaz.dam.proyectoev1di.Entities;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects; // Necesario para equals y hashCode
+import java.util.Objects;
 
 @Embeddable
 public class VideojuegoPlataformaId implements Serializable

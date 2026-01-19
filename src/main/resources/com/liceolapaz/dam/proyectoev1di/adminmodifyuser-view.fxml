@@ -17,7 +17,7 @@
                         <Insets />
                     </VBox.margin>
                 </HBox>
-                <Label fx:id="submiterrmsg" alignment="CENTER" />
+                <Label fx:id="submiterrmsgL" alignment="CENTER" />
             </children>
             <padding>
                 <Insets bottom="15.0" />

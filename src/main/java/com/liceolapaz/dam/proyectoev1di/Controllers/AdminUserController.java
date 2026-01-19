@@ -119,7 +119,7 @@ public class AdminUserController implements Initializable
     public void goToModifyUser(UserDTO user)
     {
         SessionManager.getInstance().setUser_mod(user);
-        ViewHandler.modalStage(Views.ACCOUNT.getFXML());
+        ViewHandler.modalStage(Views.MODIFYUSER.getFXML());
     }
 
     @FXML
